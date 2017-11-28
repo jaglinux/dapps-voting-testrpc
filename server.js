@@ -21,23 +21,21 @@ const deployedcontract = votingcontract.new(['bjp', 'cong', 'others'],
 (err, res) => {
   if(err) {
     console.log(err);
-  } else {
+  } else if (res.address){
       console.log(__dirname);
-      main_tx = res.transactionBbHash;
+      main_tx = res.transactionHash;
       contractinstance = res.address;
-      console.log(main_tx);
       console.log(contractinstance);
+      console.log(main_tx);
+      fs.unlinkSync(__dirname+"/save.txt");
       if(contractinstance)
-        save_data();
+        save_data(contractinstance);
+      if(main_tx)
+        save_data(main_tx);
     }
 }
 );
 //save the data
-function save_data() {
-  fs.writeFile(__dirname+"/save.txt", contractinstance, function(err) {
-    if(err) {
-        return console.log(err);
-    }
-    console.log("The file was saved!");
-});
+function save_data(text) {
+  fs.appendFileSync(__dirname+"/save.txt", text+'\n');
 }
