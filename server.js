@@ -13,6 +13,7 @@ compiledcode = solc.compile(code);
 //console.log(compiledcode);
 
 abidef = JSON.parse(compiledcode.contracts[':Voting'].interface);
+fs.writeFileSync(__dirname+"/abi.txt", compiledcode.contracts[':Voting'].interface);
 Bytecode = compiledcode.contracts[':Voting'].bytecode;
 votingcontract = web3.eth.contract(abidef);
 

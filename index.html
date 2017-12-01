@@ -31,8 +31,11 @@
       </tbody>
     </table>
   </div>
+  <div>
   <input type="text" id="candidate" />
   <a href="#" onclick="voteForParty()" class="btn btn-primary">Vote</a>
+  </div>
+  <br>
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
@@ -44,9 +47,17 @@
       <tbody>
         <tr>
           <td>Main Contract Address</td>
-          <td id="addr"></td>
+          <td id="main_addr"></td>
+        </tr>
+        <tr>
+          <td>Main Contract hash</td>
+          <td id="main_hash"></td>
         </tr>
       </tbody>
+  </div>
+  
+  <div class="table-responsive">
+    <table id="my_table" class="table table-bordered">
   </div>
 </body>
 <script type = "text/javascript"
