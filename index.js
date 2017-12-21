@@ -2,7 +2,7 @@ var whole_file;
 var contractinstance;
 var main_hash, tx_hash;
 var vote_number=0;
-
+var account_id=0;
 console.log("main");
 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 read_abi_file();
@@ -19,14 +19,16 @@ contractInstance = VotingContract.at(contractinstance);
 candidates = {"bjp": "candidate-1", "cong": "candidate-2", "others": "candidate-3"}
 
 function voteForParty() {
-  console.log("voteforparty");
+  if(account_id == 3)
+	account_id = 0;
+  console.log("voteforparty from account %d", account_id);
   candidateName = $("#candidate").val();
 
-    tx_hash = contractInstance.voteForCandidate(candidateName, {from: web3.eth.accounts[0]});
+    tx_hash = contractInstance.vote(candidateName, {from: web3.eth.accounts[account_id++]});
     if(tx_hash) {
       console.log("voteforparty inner");
       let div_id = candidates[candidateName];
-      $("#" + div_id).html(contractInstance.totalVotesFor.call(candidateName).toString());
+      $("#" + div_id).html(contractInstance.count.call(candidateName).toString());
       add_hash();
     }
 }
@@ -36,7 +38,7 @@ $(document).ready(function() {
   candidateNames = Object.keys(candidates);
   for (var i = 0; i < candidateNames.length; i++) {
     let name = candidateNames[i];
-    let val = contractInstance.totalVotesFor.call(name).toString()
+    let val = contractInstance.count.call(name).toString()
     $("#" + candidates[name]).html(val);
   }
   $('#' + "main_addr").html(contractinstance);
