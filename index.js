@@ -18,15 +18,25 @@ parse_file();
 contractInstance = VotingContract.at(contractinstance);
 candidates = {"bjp": "candidate-1", "cong": "candidate-2", "others": "candidate-3"}
 
+function kill() {
+	console.log("jag going to kill the contract !");
+	contractInstance.kill( {from:web3.eth.accounts[0]} );
+}
+
 function voteForParty() {
-  if(account_id == 3)
+  if(account_id == 9) {
 	account_id = 0;
+ }
   console.log("voteforparty from account %d", account_id);
   candidateName = $("#candidate").val();
 
+    contractInstance.vote.estimateGas(candidateName,{ from: web3.eth.accounts[account_id]}, function(error, estimate_gas) {
+	console.log("jag estimate gas is %d", estimate_gas);
+    });
+    console.log("jag candidateName is %s", candidateName);
     tx_hash = contractInstance.vote(candidateName, {from: web3.eth.accounts[account_id++]});
     if(tx_hash) {
-      console.log("voteforparty inner");
+      console.log("voteforparty inner %d ", contractInstance.count.call(candidateName));
       let div_id = candidates[candidateName];
       $("#" + div_id).html(contractInstance.count.call(candidateName).toString());
       add_hash();
