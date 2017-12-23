@@ -16,7 +16,7 @@ read_file();
 parse_file();
 
 contractInstance = VotingContract.at(contractinstance);
-candidates = {"bjp": "candidate-1", "cong": "candidate-2", "others": "candidate-3"}
+candidates = {"bjp": "candidate-1", "con": "candidate-2", "oth": "candidate-3"}
 
 function kill() {
 	console.log("jag going to kill the contract !");

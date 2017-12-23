@@ -8,7 +8,7 @@ var save_json;
 console.log("main");
 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 console.log(web3.eth.accounts);
-code = fs.readFileSync(__dirname+"/voting.sol").toString();
+code = fs.readFileSync(__dirname+"/voting_1.sol").toString();
 console.log(code);
 compiledcode = solc.compile(code);
 console.log(compiledcode);
@@ -18,7 +18,7 @@ fs.writeFileSync(__dirname+"/abi.txt", compiledcode.contracts[':Voting'].interfa
 Bytecode = compiledcode.contracts[':Voting'].bytecode;
 votingcontract = web3.eth.contract(abidef);
 
-const deployedcontract = votingcontract.new(['bjp', 'cong', 'others'],
+const deployedcontract = votingcontract.new(['bjp', 'con', 'oth'],
  { data: Bytecode, from: web3.eth.accounts[0], gas: 4700000 },
 (err, res) => {
   if(err) {
